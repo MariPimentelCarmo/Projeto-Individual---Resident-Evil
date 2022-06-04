@@ -1,1 +1,1 @@
-# Projeto-Individual---Residente-Evil
+# Projeto-Individual---Resident-Evil
