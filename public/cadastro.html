@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html lang="pt">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="CSS/Style.css">
+    <script src="JS/script.js"></script>
+    <title>Cadastro</title>
+</head>
+
+<body>
+    <div class="main-cadastro">
+        <div class="left-cadastro">
+            <img src="imagens/leonkennedycorte.png" class="left-login-image" alt="Leon Kennedy">
+            <img src="imagens/44670.png" class="voltar" onclick="voltar()">
+        </div>
+        <div class="right-cadastro">
+            <div class="card-cadastro">
+                <h1>Cadastre-se</h1>
+                <div class="textfield">
+                    <label for="nome">Nome</label>
+                    <input type="text" id="cad_nome" placeholder="Usuário">
+                </div>
+                <div class="textfield">
+                    <label for="dtNascimento">Data de nascimento</label>
+                    <input type="date" id="cad_dtNascimento">
+                </div>
+                <div class="textfield">
+                    <label for="usuario">E-mail</label>
+                    <input type="text" id="cad_email" placeholder="">
+                </div>
+                <div class="textfield">
+                    <label for="senha">Senha</label>
+                    <input type="password" id="cad_senha" placeholder="Senha">
+                </div>
+                <button class="btn-cadastrar" onclick="cadastrar()">Cadastrar</button>
+                <div class="textfield" id="redirecionar">
+                    <label for="redirecionar">Já é cadastrado? <a href="login.html">faça login</a></label>
+                </div>
+            </div>
+        </div>
+    </div>
+
+</body>
+
+</html>
+
+<script>
+    function cadastrar() {
+
+        //Recupere o valor da nova input pelo nome do id
+        // Agora vá para o método fetch logo abaixo
+        var nomeVar = cad_nome.value;
+        var dtNascimentoVar = cad_dtNascimento.value;
+        var emailVar = cad_email.value;
+        var senhaVar = cad_senha.value;
+
+
+        if (nomeVar == "" || dtNascimentoVar == "" || emailVar == "" || senhaVar == "") {
+            alert("Preencha todos os campos para prosseguir!");
+        }
+        else if (emailVar.indexOf("@") == -1 || emailVar.indexOf(".com") == -1) {
+            alert("Ops, e-mail inválido! Verifique e tente novamente.");
+        } else if (senhaVar.length < 6) {
+            alert("A senha deve conter no mínimo 6 caracteres!");
+        } else {
+            console.log("antes do fetch")
+            // Enviando o valor da nova input
+            fetch("/usuarios/cadastrar", {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json"
+                },
+                body: JSON.stringify({
+                    // crie um atributo que recebe o valor recuperado aqui
+                    // Agora vá para o arquivo routes/usuario.js
+                    nomeServer: nomeVar,
+                    dtNascimentoServer: dtNascimentoVar,
+                    emailServer: emailVar,
+                    senhaServer: senhaVar
+                })
+            }).then(function (resposta) {
+
+                console.log("resposta: ", resposta);
+
+                if (resposta.ok) {
+                    alert(`cadastrado`);
+                } else {
+                    throw ("Houve um erro ao tentar realizar o cadastro!");
+                }
+            }).catch(function (resposta) {
+                console.log(`#ERRO: ${resposta}`);
+            });
+
+            return false;
+        }
+    }
+
+</script>

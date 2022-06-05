@@ -1,0 +1,160 @@
+<!DOCTYPE html>
+<html lang="pt">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="CSS/Style.css">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script src="JS/script.js"></script>
+    <title>Home</title>
+</head>
+
+<body onload="mais_acessados(()=> inserir_dados()), setTimeout(atualizar, 700)">
+    <div class="header-index">
+        <div id="header_home" class="container">
+            <div class="logo">
+                <img src="imagens/EaUXuSMXgAYHsUA.png" onclick="volta_inicio()">
+            </div>
+            <div class="navbar">
+                <button class="btn-header" onclick="abre_jogo()">Jogos</button>
+                <button class="btn-header" onclick="abre_personagens()">Personagens</button>
+                <button class="btn-header" onclick="abre_organizações()">Organizações</button>
+                <button class="btn-header" onclick="abre_criaturas()">Criaturas</button>
+                <button class="btn-header" onclick="abre_virus()">virus</button>
+                <button class="btn-header" onclick="abre_perfil()">Perfil</button>
+            </div>
+        </div>
+    </div>
+
+    <div id="lista_header" class="lista-header">
+        <a onclick="inserir_acesso(1)" href="re0.html">Resident Evil 0</a>
+        <a onclick="inserir_acesso(2)" href="re1.html">Resident Evil 1</a>
+        <a onclick="inserir_acesso(3)" href="re2.html">Resident Evil 2</a>
+        <a onclick="inserir_acesso(4)" href="re3.html">Resident Evil 3</a>
+        <a onclick="inserir_acesso(5)" href="re4.html">Resident Evil 4</a>
+        <a onclick="inserir_acesso(6)" href="re5.html">Resident Evil 5</a>
+        <a onclick="inserir_acesso(7)" href="re6.html">Resident Evil 6</a>
+        <a onclick="inserir_acesso(8)" href="re7.html">Resident Evil 7</a>
+        <a onclick="inserir_acesso(9)" href="re8.html">Resident Evil 8</a>
+    </div>
+
+    <div class="banner-imagem">
+        <div class="container-inicio">
+            <img src="Imagens/csm_village__10__bb50bcc8bd.jpg">
+        </div>
+
+    </div>
+    <div id="metricas" class="metricas">
+        <div class="container">
+            <label>Páginas mais acessadas</label>
+            <div class="grafico">
+                <canvas id="myChart"></canvas>
+            </div>
+        </div>
+    </div>
+    <div class="footer">
+        <div class="container">
+            <img src="imagens/EaUXuSMXgAYHsUA.png">
+            <label for="footer">©2022 - Resident Evil</label>
+        </div>
+    </div>
+</body>
+</html>
+
+<script>
+    const labels = [
+      
+    ];
+
+    const data = {
+        labels: labels,
+        datasets: [{
+            label: 'Jogos da franquia',
+            backgroundColor: '#E3DDA4',
+            borderColor: '#E3DDA4',
+            data: [],
+        }]
+    };
+
+    const config = {
+        type: 'bar',
+        data: data,
+        options: {}
+    };
+</script>
+
+<script>
+    const myChart = new Chart(
+        document.getElementById('myChart'),
+        config
+    );
+</script>
+
+<script>
+    function inserir_acesso(idResident) {
+
+    fetch("/usuarios/inserir_acesso", {
+        method: "POST",
+        headers: {
+            "Content-Type": "application/json"
+        },
+        body: JSON.stringify({
+            idResidentServer: idResident
+        })
+    }).then(function (resposta) {
+
+        console.log("resposta: ", resposta);
+
+        if (resposta.ok) {
+            // _callback();
+        } else {
+            throw ("Houve um erro ao inserir acessos");
+        }
+    }).catch(function (resposta) {
+        console.log(`Erro do catch: ${resposta}`);
+    });
+
+    return false;
+}
+
+var RE_nome = [];
+var qtd_acessos = [];
+
+function mais_acessados(_callback) {
+
+fetch(`/usuarios/mais_acessados/`, { cache: 'no-store' }).then(function (response) {
+    if (response.ok) {
+        response.json().then(function (resposta) {
+            console.log(`Dados recebidos: ${JSON.stringify(resposta)}`);
+            for(var contador = 0; contador <= 2; contador++){
+                RE_nome[contador] = resposta[contador].titulo;
+                qtd_acessos[contador] = resposta[contador].qtdAcessos;
+            }
+            _callback();
+        });
+    } else {
+        console.error('Nenhum dado encontrado ou erro na API');
+        _callback();
+    }
+})
+    .catch(function (error) {
+        console.error(`Erro na obtenção dos dados p/ gráfico: ${error.message}`);
+    });
+
+}
+
+function inserir_dados() {
+        labels.push(RE_nome[0]);
+        labels.push(RE_nome[1]);
+        labels.push(RE_nome[2]);
+        data.datasets[0].data.push(qtd_acessos[0]);
+        data.datasets[0].data.push(qtd_acessos[1]);
+        data.datasets[0].data.push(qtd_acessos[2]);
+}
+
+function atualizar() {
+    myChart.update();
+}
+</script>
