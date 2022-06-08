@@ -14,7 +14,7 @@
     <div class="main-login">
         <div class="left-login">
             <img src="imagens/adawong.png" class="left-login-image" alt="Ada Wong">
-            <img src="imagens/44670.png" class="voltar" onclick="voltar()">
+            <img src="imagens/seta-direita.png" class="voltar" onclick="voltar()">
         </div>
         <div class="right-login">
             <div class="card-login">
@@ -27,7 +27,16 @@
                     <label for="senha">Senha</label>
                     <input type="password" id="login_senha" placeholder="Senha">
                 </div>
+                
                 <button class="btn-login" onclick="entrar()">Entrar</button>
+
+                <div style="display:none;" id="div_msg">
+    
+                </div>
+                <div style="display:none;" class="div_msg_img" id="div_msg_img">
+                    <img id="img_load">
+                </div>
+
                 <div class="textfield" id="redirecionar">
                     <label for="redirecionar">Ainda não possui cadastro? <a href="cadastro.html">cadastre-se</a></label>
                 </div>
@@ -46,12 +55,14 @@
         var emailVar = login_email.value;
         var senhaVar = login_senha.value;
 
-        // TODO: VERIFICAR AS VALIDAÇÕES QUE ELES ESTÃO APRENDENDO EM ALGORITMOS 
         if (emailVar == "" || senhaVar == "") {
-            alert("Preencha todos os campos para prosseguir!");
+            div_msg.style.display = 'block';
+            div_msg.innerHTML = `Preencha todos os campos para prosseguir`;
+
+
         }
         else if (emailVar.indexOf("@") == -1 || emailVar.indexOf(".com") == -1) {
-            alert("Ops, e-mail inválido! Verifique e tente novamente.");
+            div_msg.innerHTML = `E-mail inválido! Verifique e tente novamente.`;
         }
         else {
             console.log("FORM LOGIN: ", emailVar);
@@ -80,10 +91,13 @@
                         sessionStorage.NOME_USUARIO = json.nome;
                         sessionStorage.ID_USUARIO = json.idUsuario;
 
-                        login_email.value = 'estou dando o gu'
+                        div_msg.style.display = 'none';
+                        div_msg_img.style.display = 'block';
+                        img_load.src = 'imagens/load.htm';
+
                         setTimeout(function () {
                             window.location.href = "inicio.html"
-                    }, 3000); // apenas para exibir o loading
+                    }, 1500); // apenas para exibir o loading
 
                     });
 

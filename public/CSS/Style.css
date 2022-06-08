@@ -29,8 +29,9 @@ body {
     height: 50px;
     top: 0;
     left: 0;
-    margin-top: 30px;
+    margin-top: 10px;
     cursor: pointer;
+    padding: 20px;
 }
 
 .left-login-image {
@@ -106,7 +107,21 @@ body {
     background: #E3DDA4;
     cursor: pointer;
     box-shadow: 0px 10px 40px -12px #eee8aa;
+}
 
+#div_msg {
+    margin-top: 6px;
+    margin-bottom: 6px;
+    font-size: 12pt;
+    color: #E3DDA4;
+}
+
+.div_msg_img {
+    height: 20px;
+}
+
+#img_load {
+    height: 100%;
 }
 
 /*Página de Cadastro*/
@@ -260,8 +275,13 @@ a {
     flex-direction: row;
     justify-content: end;
     height: 100%;
-    width: 90%;
+    width: 100%;
+    background-color: rgb(0, 0, 0, 0.400);
 }
+
+/* .header-index .container .logo {
+    background-color: rgb(0, 0, 0, 0.400);
+} */
 
 #header_home {
     background-color: #2E2E2E;
@@ -301,12 +321,28 @@ a {
 .banner-index .container {
     display: flex;
     width: 100%;
-    height: 600px;
+    min-height: 600px;
+    max-height: 4000;
     background-size: cover;
+    
 }
 
 .banner-index .container img {
     height: 100%;
+    width: 100%;
+    align-items: center;
+}
+
+.welcome-index {
+    width: 100%;
+    position: absolute;
+    top: 600px;
+    text-align: center;
+    font-size: 40px;
+    color: #E3DDA4;
+    text-shadow: 0px 0px 5px #000000;
+    white-space: pre-line;
+    border-radius: 20px;
 }
 
 .footer .container {
@@ -336,17 +372,20 @@ a {
 
 /* Tela Inicio */
 .lista-header {
-    flex-direction: column;
     display: none;
+    flex-direction: column;
     position: fixed;
     height: 220px;
     margin-left: 10%;
-    margin-top: 6%;
+    margin-top: 0%;
     width: 12%;
-    background-color: #000000;
+    background-color: #2E2E2E;
     border-radius: 10px;
+    border-top-left-radius: 0;
+    border-top-right-radius: 0;
     justify-content: center;
     align-items:center;
+    z-index: 1001;
 }
 
 .lista-header a {
@@ -441,6 +480,7 @@ p {
     color: #ffffff;
     font-size: 14pt;
     align-items: center;
+    font-family: Arial, Helvetica, sans-serif;
 }
 .container-personagens {
     display: flex;
