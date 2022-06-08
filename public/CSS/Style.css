@@ -485,7 +485,8 @@ p {
 .container-personagens {
     display: flex;
     margin-top: 78px;
-    height: 300px;
+    min-height: 300px;
+    max-height: 2000px;
     width: 100%;
 }
 
@@ -494,4 +495,60 @@ p {
     height: 100%;
 }
 
+/* Inicio Criaturas */
+.titulo {
+    position: absolute;
+    top: 600px;
+    left: 45%;
+    text-align: center;
+    font-size: 40pt;
+    color: #E3DDA4;
+
+}
+.criaturas {
+    display: flex;
+    flex-direction: column;
+    min-height: 700px;
+    max-height: 4000px;
+}
+
+.criaturas .container {
+    height: 100%;
+    width: 80%;
+    margin: auto;
+}
+
+.container .conteudo {
+    display: flex;
+    flex-direction: row;
+    min-height: 200px;
+    max-height: 400px;
+    width: 100%;
+    border-bottom: #E3DDA4 solid 1px;
+}
+
+.img-conteudo {
+    height: 80%;
+    width: 20%;
+    padding: 30px;
+    margin: auto;
+}
+
+.text-conteudo {
+    height: 100%;
+    width: 80%;
+    margin: auto;
+    padding: 10px;
+}
+
+h2 {
+    color: #E3DDA4;
+    font-family: cinzel decorative;
+}
+
+.text-conteudo {
+    font-size: 12pt;
+    color: #ffffff;
+    font-family: Arial, Helvetica, sans-serif;
+}
 
