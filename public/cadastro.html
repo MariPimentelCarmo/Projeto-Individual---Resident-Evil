@@ -36,6 +36,10 @@
                     <input type="password" id="cad_senha" placeholder="Senha">
                 </div>
                 <button class="btn-cadastrar" onclick="cadastrar()">Cadastrar</button>
+                <div style="display:none;" id="div_msg">
+    
+                </div>
+
                 <div class="textfield" id="redirecionar">
                     <label for="redirecionar">Já é cadastrado? <a href="login.html">faça login</a></label>
                 </div>
@@ -57,15 +61,32 @@
         var emailVar = cad_email.value;
         var senhaVar = cad_senha.value;
 
+        const anoAtual = 2022;
+        var ano = 0;
+        var data = cad_dtNascimento.value;
+        
+        for(i = 0; i < 4; i++){
+            ano += data[i];
+        }
+        ano = Number(ano);
+       
+
 
         if (nomeVar == "" || dtNascimentoVar == "" || emailVar == "" || senhaVar == "") {
-            alert("Preencha todos os campos para prosseguir!");
+            div_msg.style.display = 'block';
+            div_msg.innerHTML = "Preencha todos os campos para prosseguir!";
         }
         else if (emailVar.indexOf("@") == -1 || emailVar.indexOf(".com") == -1) {
-            alert("Ops, e-mail inválido! Verifique e tente novamente.");
+            div_msg.style.display = 'block';
+            div_msg.innerHTML ="E-mail inválido! Verifique e tente novamente.";
         } else if (senhaVar.length < 6) {
-            alert("A senha deve conter no mínimo 6 caracteres!");
-        } else {
+            div_msg.style.display = 'block';
+            div_msg.innerHTML ="A senha deve conter no mínimo 6 caracteres!";
+        } else if(anoAtual - ano < 16){
+            div_msg.style.display = 'block';
+            div_msg.innerHTML ='É necessário ser maior de 16 anos para se cadastrar';
+        }
+        else {
             console.log("antes do fetch")
             // Enviando o valor da nova input
             fetch("/usuarios/cadastrar", {
@@ -86,7 +107,11 @@
                 console.log("resposta: ", resposta);
 
                 if (resposta.ok) {
-                    alert(`cadastrado`);
+                    div_msg.style.display = 'block';
+                    div_msg.innerHTML = `Cadastro realizado com sucesso`;
+                    setTimeout(function () {
+                            window.location.href = "login.html"
+                    }, 2000);
                 } else {
                     throw ("Houve um erro ao tentar realizar o cadastro!");
                 }

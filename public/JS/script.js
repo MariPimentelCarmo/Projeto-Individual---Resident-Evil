@@ -13,7 +13,7 @@ function voltar() {
 }
 
 function abre_jogo() {
-    
+
     if (visivel == false) {
         lista_header.style.display = 'flex';
         visivel = true;
@@ -21,7 +21,7 @@ function abre_jogo() {
         lista_header.style.display = 'none';
         visivel = false;
     }
-    
+
 }
 
 function volta_inicio() {
@@ -32,19 +32,23 @@ function abre_criaturas() {
     window.location.href = "criaturas.html"
 }
 
-function abre_virus() {
-    window.location.href = "virus.html"
-}
-
-function abre_organizacoes() {
-    window.location.href = "organizacoes.html"
-}
-
 function abre_personagens() {
     window.location.href = "personagens.html"
 }
 
 function sair() {
-    sessionStorage.clear;
+    sessionStorage.clear();
     window.location.href = "index.html"
+}
+
+function validarsessao() {
+    var nome = sessionStorage.NOME_USUARIO;
+    var email = sessionStorage.EMAIL_USUARIO;
+    var idUsuario = sessionStorage.ID_USUARIO;
+
+    if (nome != undefined || email != undefined || idUsuario != undefined) {
+        alert(`Olá ${nome}`)
+    } else {
+        window.location.href = "index.html"
+    }
 }
